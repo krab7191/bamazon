@@ -1,0 +1,27 @@
+{
+  "name": "bamazon",
+  "version": "1.0.0",
+  "description": "Node cli storefront app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/krab7191/bamazon.git"
+  },
+  "keywords": [
+    "node",
+    "mysql"
+  ],
+  "author": "Karsten Rabe",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/krab7191/bamazon/issues"
+  },
+  "homepage": "https://github.com/krab7191/bamazon#readme",
+  "dependencies": {
+    "inquirer": "^6.2.0",
+    "mysql": "^2.16.0"
+  }
+}
