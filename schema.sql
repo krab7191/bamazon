@@ -1,3 +1,11 @@
+/* log in via root mysql user to set up server environment safely */
+create DATABASE bamazon;
+GRANT ALL PRIVILEGES ON bamazon.* TO 'karsten'@'localhost';
+FLUSH PRIVILEGES;
+/* \q */
+/* ----------------- READY ----------------*/
+
+
 /* Delete the DB if it exists */
 drop database if exists bamazon;
 
