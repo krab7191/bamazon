@@ -45,7 +45,7 @@ function menuOptions() {
                 promptAddItems(addToInventory);
                 break;
             case "NEW":
-                addRow();
+                addProduct();
                 break;
         }
     });
@@ -75,7 +75,7 @@ function displayLowStock(cback) {
         // Make new table object
         var tab = new sqlTab({
             head: ['id', 'product', 'department', 'price', '# in stock', 'total sales'],
-            colWidths: [5, 25, 25, 12, 12, 12]
+            colWidths: [5, 25, 25, 12, 12, 14]
         });
         res.forEach(function (i) {
             tab.push(
@@ -120,41 +120,46 @@ function addToInventory(itemId, amount, cback) {
         }
     });
 }
-function addRow() {
-    iq.prompt([
-        {
-            message: "Enter the name of the product",
-            name: 'name',
-            validate: function valName(name) {
-                return name !== '';
+function addProduct() {
+    conn.query("SELECT department_name FROM departments", function(err, res) {
+        if (err) throw err;
+        var depts = [];
+        res.forEach(function(i) {
+            depts.push(i.department_name);
+        });
+        iq.prompt([
+            {
+                message: "Enter the name of the product",
+                name: 'name',
+                validate: function valName(name) {
+                    return name !== '';
+                }
+            },
+            {
+                message: "What department does the product belong in?",
+                type: "list",
+                name: "dept",
+                choices: depts
+            },
+            {
+                message: "What is the item's price?",
+                name: "price",
+                validate: function validnum(price) {
+                    return !isNaN(parseFloat(price)) || "Must be a valid decimal number";
+                }
+            },
+            {
+                message: "How many do you want to add to stock?",
+                name: 'stock'
             }
-        },
-        {
-            message: "What department does the product belong in?",
-            name: "dept",
-            validate: function valDept(dept) {
-                return dept !== '';
-            }
-        },
-        {
-            message: "What is the item's price?",
-            name: "price",
-            validate: function validnum(price) {
-                return !isNaN(parseFloat(price)) || "Must be a valid decimal number";
-            }
-        },
-        {
-            message: "How many do you want to add to stock?",
-            name: 'stock'
-        }
-    ]).then(function(a) {
-        conn.query("INSERT INTO products (product_name, department_name, price, stock_quantity) VALUES (?, ?, ?, ?)", [a.name, a.dept, a.price, a.stock], function(err, res) {
-            if (err) throw err;
-            console.log(res);
-            if (res.affectedRows === 1) {
-                console.log(`${a.stock} ${a.name}(s) added at $${a.price} each`);
-            }
-            menuOptions();
+        ]).then(function (a) {
+            conn.query("INSERT INTO products (product_name, department_name, price, stock_quantity) VALUES (?, ?, ?, ?)", [a.name, a.dept, a.price, a.stock], function (err, res) {
+                if (err) throw err;
+                if (res.affectedRows === 1) {
+                    console.log(`\n${a.stock} ${a.name}(s) added at $${a.price} each.\n`);
+                }
+                menuOptions();
+            });
         });
     });
 }
