@@ -26,12 +26,12 @@ function displayItemsAsTable(cback) {
         if (err) throw error;
         // Make new table object
         var tab = new sqlTab({
-            head: ['id', 'product', 'department', 'price', '# in stock'],
-            colWidths: [5, 25, 25, 12, 12]
+            head: ['id', 'product', 'price', '# in stock'],
+            colWidths: [5, 25, 12, 12]
         });
         res.forEach(function (i) {
             tab.push(
-                [i.item_id, i.product_name, i.department_name, i.price, i.stock_quantity]
+                [i.item_id, i.product_name, i.price, i.stock_quantity]
             );
         });
         console.log(tab.toString());
@@ -70,13 +70,13 @@ function checkIdExists(id, number) {
                 promptUserBuy();
             }
             else {
-                updateStock(res[0].item_id, amountInStock, number, res[0].price);
+                updateStock(res[0].item_id, amountInStock, number, res[0].price, number * res[0].price);
             }
         }
     });
 }
-function updateStock(id, stock, toBuy, price) {
-    conn.query('UPDATE products SET stock_quantity = ? WHERE item_id = ?', [stock-toBuy, id], function(err, res) {
+function updateStock(id, stock, toBuy, price, totSale) {
+    conn.query('UPDATE products SET stock_quantity = ?, product_sales = ? WHERE item_id = ?', [stock-toBuy, totSale, id], function(err, res) {
         if (err) throw err;
         console.log(`\n|| ${toBuy} purchased for $${price * toBuy}. Thank you! ||\n`);
         promptUserBuy();

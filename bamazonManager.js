@@ -56,12 +56,12 @@ function displayItems(cback) {
         if (err) throw error;
         // Make new table object
         var tab = new sqlTab({
-            head: ['id', 'product', 'department', 'price', '# in stock'],
-            colWidths: [5, 25, 25, 12, 12]
+            head: ['id', 'product', 'department', 'price', '# in stock', 'total sales'],
+            colWidths: [5, 25, 25, 12, 12, 15]
         });
         res.forEach(function (i) {
             tab.push(
-                [i.item_id, i.product_name, i.department_name, i.price, i.stock_quantity]
+                [i.item_id, i.product_name, i.department_name, i.price, i.stock_quantity, i.product_sales]
             );
         });
         console.log(tab.toString());
@@ -74,12 +74,12 @@ function displayLowStock(cback) {
         if (err) throw error;
         // Make new table object
         var tab = new sqlTab({
-            head: ['id', 'product', 'department', 'price', '# in stock'],
-            colWidths: [5, 25, 25, 12, 12]
+            head: ['id', 'product', 'department', 'price', '# in stock', 'total sales'],
+            colWidths: [5, 25, 25, 12, 12, 12]
         });
         res.forEach(function (i) {
             tab.push(
-                [i.item_id, i.product_name, i.department_name, i.price, i.stock_quantity]
+                [i.item_id, i.product_name, i.department_name, i.price, i.stock_quantity, i.product_sales]
             );
         });
         console.log(tab.toString());

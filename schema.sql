@@ -26,6 +26,9 @@ create TABLE products
     PRIMARY KEY (item_id)
 );
 
+/* Change the table based on challenge 3 */
+ALTER TABLE products ADD product_sales DECIMAL (10, 2) default 0;
+
 /* -- Populate with some items -- */
 insert into products (product_name, department_name, price, stock_quantity)
 values ("Router", "networking", 34.99, 100);
