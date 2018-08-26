@@ -40,3 +40,6 @@ You need mysql and node installed to make this work. There is some additional da
 `node bamazonManager.js`
 `node bamazonSupervisor.js`
 
+Heres a video link which shows the functionality:
+
+[video](https://github.com/krab7191/bamazon/blob/master/screenshots/bamazon.mp4)
