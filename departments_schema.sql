@@ -26,3 +26,6 @@ values ('electrical', 5500);
 
 insert into departments (department_name, over_head_costs)
 values ('networking', 2700);
+
+insert into departments (department_name, over_head_costs)
+values ('food', 550);
