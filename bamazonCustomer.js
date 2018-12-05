@@ -23,7 +23,7 @@ conn.connect();
 
 function displayItemsAsTable(cback) {
     conn.query('SELECT * FROM products', function (err, res) {
-        if (err) throw error;
+        if (err) throw err;
         // Make new table object
         var tab = new sqlTab({
             head: ['id', 'product', 'price', '# in stock'],
